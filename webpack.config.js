@@ -5,10 +5,23 @@ const webpack = require('webpack');
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
 const config = {
-  name: 'sleact',
+  name: 'auto-token-generator',
   mode: isDevelopment ? 'development' : 'production',
   devtool: isDevelopment ? 'hidden-source-map' : 'inline-source-map',
   resolve: {
+    fallback: {
+      util: require.resolve("util/"),
+      path: require.resolve("path-browserify"),
+      crypto: require.resolve("crypto-browserify"),
+      buffer: require.resolve("buffer/"),
+      https: require.resolve("https-browserify"),
+      http: require.resolve("stream-http"),
+      os: require.resolve("os-browserify/browser"),
+      vm: require.resolve("vm-browserify"),
+      stream: require.resolve("stream-browserify"),
+      constants: require.resolve("constants-browserify"),
+      assert: require.resolve("assert/"),
+    },
     extensions: ['.js', '.jsx', '.json'],
     alias: {
       '@hooks': path.resolve(__dirname, 'hooks'),
@@ -17,6 +30,7 @@ const config = {
       '@pages': path.resolve(__dirname, 'pages'),
       '@utils': path.resolve(__dirname, 'utils'),
       '@typings': path.resolve(__dirname, 'typings'),
+      '@assets': path.resolve(__dirname, 'assets'),
     },
   },
   entry: {
@@ -24,6 +38,16 @@ const config = {
   },
   module: {
     rules: [
+      {
+        test: /\.scss$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: { importLoaders: 1 },
+          },
+        ],
+      },
       {
         test: /\.jsx?$/,
         loader: 'babel-loader',
@@ -48,7 +72,7 @@ const config = {
       },
       {
         test: /\.css?$/,
-        use: ['style-loader', 'css-loader'],
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
     ],
   },

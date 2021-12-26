@@ -1,0 +1,53 @@
+import React,{useState} from 'react'
+import networks from '../constants/network'
+import './Nav.scss'
+import cx from 'classnames'
+import {isNull,isUndefined} from 'lodash'
+import ConnectWallet from './connectWallet'
+import './test'
+
+const Nav = ({network}) => {
+    
+    const [isVisible, setIsVisible] = useState(false);
+    
+    const onSetIsVisible = (active) => {
+        setIsVisible(active)
+    }
+
+    const onClickButton = (e) => {
+        e.preventDefault();
+        test()
+        // onSetIsVisible(true)
+    }
+
+
+    return(
+      <header className="Nav">
+        <div className='Nav__inner'>
+            <h1 className='Nav__logo'>
+                <a href='/'>
+                    <img 
+                        src="https://bitcoin.org/img/icons/opengraph.png?1637078881"
+                        width={30}
+                    />
+                </a>
+            </h1>
+            <div className={cx('Nav__network', {
+            'Nav__network--error': isNull(network),
+            'Nav__network--loading': network === 'loading',
+            })}>
+            <span>&#9679;</span>
+            {networks[network] === undefined ? <button onClick={onClickButton}>connect</button> : networks[network]}
+      </div>
+        </div>
+        <div>
+            {/* {isVisible && <BodyBlackoutStyle onSetIsVisible={onSetIsVisible} />} */}
+            {isVisible && (
+            <ConnectWallet setIsVisible={setIsVisible} />
+            )}
+        </div>
+    </header>      
+    )
+}
+
+export default Nav
