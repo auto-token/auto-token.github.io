@@ -4,20 +4,19 @@ import './Nav.scss'
 import cx from 'classnames'
 import {isNull,isUndefined} from 'lodash'
 import ConnectWallet from './connectWallet'
-import './test'
+
+import { useRecoilState } from 'recoil';
+import {isModalOpen} from '../store/atom'
 
 const Nav = ({network}) => {
-    
+    const [isOpen, setIsOpen] = useRecoilState(isModalOpen)
     const [isVisible, setIsVisible] = useState(false);
     
-    const onSetIsVisible = (active) => {
-        setIsVisible(active)
-    }
+    
 
     const onClickButton = (e) => {
         e.preventDefault();
-        test()
-        // onSetIsVisible(true)
+        setIsOpen(!isOpen)
     }
 
 
@@ -30,6 +29,7 @@ const Nav = ({network}) => {
                         src="https://bitcoin.org/img/icons/opengraph.png?1637078881"
                         width={30}
                     />
+                    logo
                 </a>
             </h1>
             <div className={cx('Nav__network', {
@@ -37,7 +37,8 @@ const Nav = ({network}) => {
             'Nav__network--loading': network === 'loading',
             })}>
             <span>&#9679;</span>
-            {networks[network] === undefined ? <button onClick={onClickButton}>connect</button> : networks[network]}
+            {/* {networks[network] === undefined ? <button onClick={onClickButton}>connect</button> : networks[network]} */}
+            <button onClick={onClickButton}>connect</button>
       </div>
         </div>
         <div>

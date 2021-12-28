@@ -1,64 +1,50 @@
 import React,{useState,useEffect} from 'react';
-import caver from './libs/caver'
+import { Switch, Route } from "react-router-dom";
+
 import './App.scss'
-import networks from './constants/network';
+import Modal from 'react-modal'
 import Nav from './components/Nav'
-import WalletInfo from './components/WalletInfo';
+import {isModalOpen} from './store/atom'
+
+import { useRecoilState } from 'recoil';
+import MainPage from './pages/mainPage'
+import SecondPage from './pages/secondPage'
 
 const App = () => {
-
-  
-  const [accout,setAccount]=useState('')
-  const [balance,setBalance]=useState('')
-  const [network,setNetwork]=useState('')
-  const [isVisible,setIsVisible]=useState('')
-
-  useEffect(()=>{
-    loadAccountInfo()
-  })
-
-  const loadAccountInfo = async () => {
-    const { klaytn } = window
-    if (klaytn) {
-      try {
-        await klaytn.enable()
-        setAccountInfo(klaytn)
-        setNetworkInfo(klaytn)
-        klaytn.on('accountsChanged', () => setAccountInfo(klaytn))
-      } catch (error) {
-        console.log('User denied account access')
-      }
-    } else {
-      console.log('Non-Kaikas browser detected. You should consider trying Kaikas!')
-    }
-  }
-
-  const setAccountInfo = async () => {
-    const { klaytn } = window
-    if (klaytn === undefined) return
-
-    const account = klaytn.selectedAddress
-    const balance = await caver.klay.getBalance(account)
-    setNetworkInfo(klaytn)
-    setAccount(account)
-    setBalance(balance)
-  }
-
-  const setNetworkInfo = () => {
-    const { klaytn } = window
-    if (klaytn === undefined) return
-
-    setNetwork(klaytn.networkVersion)
-    klaytn.on('networkChanged', () => setNetworkInfo(klaytn.networkVersion))
-  }
-
-  console.log(klaytn.networkVersion)
+  const [isOpen, setIsOpen] = useRecoilState(isModalOpen)
 
   return(
-    <div className="App">
-      <Nav network={network}/>
-      <WalletInfo address={accout} balance={balance} />  
-    </div>
+        <>
+        <Nav />
+          <Modal isOpen={isOpen} onRequestClose={()=> setIsOpen(!isOpen)} ariaHideApp={false}
+          style={{
+            overlay: {
+              position: 'fixed',
+              top: '0%',
+              left: '0%',
+              right: '0%',
+              bottom: '0%',
+              backgroundColor: 'rgba(255, 255, 255, 0.75)'
+            },
+            content: {
+              top: '25%',
+              left: '25%',
+              right: '25%',
+              bottom: '25%',
+              display:'flex',
+              flexDirection:'column',
+              justifyContent:'center'
+            }
+          }}
+          >
+            <button>kaikas login</button>
+            <button onClick={()=>alert('준비중')}>klip login</button>
+          </Modal>
+          <Switch>
+            <Route component={MainPage} path="/" exact />
+            <Route component={SecondPage} path="/second" exact />
+          </Switch>
+        </>
     
   ) 
 };

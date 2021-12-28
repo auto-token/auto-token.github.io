@@ -1,6 +1,8 @@
 import React from 'react';
 import { render } from 'react-dom';
-
+import { RecoilRoot } from 'recoil';
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import App from './src/App';
 
-render(<App />, document.querySelector('#app'));
+
+render(<BrowserRouter><RecoilRoot><App /></RecoilRoot></BrowserRouter>,document.querySelector('#app'));
