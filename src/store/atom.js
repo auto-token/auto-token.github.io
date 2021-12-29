@@ -1,4 +1,8 @@
 import { atom } from 'recoil';
+import { recoilPersist } from 'recoil-persist'
+
+// localstorage save datas
+const { persistAtom } = recoilPersist()
 
 export const isModalOpen = atom({
     key: 'isModalOpen',
@@ -7,15 +11,13 @@ export const isModalOpen = atom({
 
 export const account_address = atom({
     key: 'account_address',
-    default: ''
+    default: '',
+    effects_UNSTABLE: [persistAtom]
 })
 
 export const account_balance = atom({
     key: 'account_balance',
-    default: ''
+    default: '',
+    effects_UNSTABLE: [persistAtom]
 })
 
-export const connect_wallet_modal = atom({
-    key: 'connect_wallet_modal',
-    default: false
-})
