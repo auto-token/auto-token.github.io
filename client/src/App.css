@@ -2,6 +2,30 @@
   text-align: center;
 }
 
+.chatArea {
+  height: 100%;
+  width: 100%;
+  margin: 20px;
+  align-items: center;
+  justify-content: center;
+}
+.chatText{
+  
+  border-width: 10px;
+  border-color: #282c34;
+
+  /* background-color: #282c34; */
+}
+.chatState{
+  height: 80%;
+  width: 80%;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
