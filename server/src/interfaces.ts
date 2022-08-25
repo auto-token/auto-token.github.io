@@ -26,6 +26,7 @@ export interface IChat {
 
 export interface WebSocket_uuid extends WebSocket {
     _uuid: string;
+    _user: IUser;
 }
 
 export const enum ServerMessageType {
@@ -48,4 +49,17 @@ export interface IPacket {
     userName?: IUser['name']
     data?: any
 }
+
+
+export interface CLIENT_PACKET_LAYER {
+    type: ClientMessageType;
+    data: any;
+}
+
+
+export interface SERVER_PACKET_LAYER {
+    type: ServerMessageType;
+    data: any;
+}
+
 

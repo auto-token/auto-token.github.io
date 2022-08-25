@@ -48,9 +48,10 @@ function App() {
   const sendText = () => {
     if(inputMessage == "블록넘버"){
       ws_sendMessage(inputMessage)
-    } else if(inputMessage == "변경"){
+    } else {
       // dispatch(changeUserInfo())
-      console.log(a)
+      console.log(inputMessage)
+      ws_sendMessage(inputMessage)
     }
 
     setChatText(
