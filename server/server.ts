@@ -29,7 +29,7 @@ class WebSocketServerModel {
         
         const user:IUser = {
           uuid: ws['_uuid'],
-          name: '무제',
+          name: '',
           connectedRooms: []
           
         }
@@ -41,7 +41,7 @@ class WebSocketServerModel {
         const _packet: IPacket = {
           type : ClientMessageType['connected'],
           senderId: user['uuid'],
-          userName: user['name']
+
         }
 
         ws.send(JSON.stringify(_packet));
@@ -55,10 +55,21 @@ class WebSocketServerModel {
 
         // 이부분 확인해볼것,
         // const _data: CLIENT_PACKET_LAYER = data;
+        switch(String(data)){
+          case '명령어':
+            this.sendMessage(ws);
+            break;
+          // case '명령어':
+          //   this.sendMessage(ws);
+          //   break;
+          // case '명령어':
+          //   this.sendMessage(ws);
+          //   break;
 
 
-        console.log('========================================')
-        console.log(ws['_user'])
+          default:
+            break;
+        }
         // ws.send('okay')
 
       }),
@@ -79,6 +90,10 @@ class WebSocketServerModel {
       })
 
     }
+  }
+
+  private sendMessage = (ws:WebSocket_uuid) => {
+    ws.send('okay')
   }
 }
 

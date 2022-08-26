@@ -35,7 +35,7 @@ function App() {
     
     ws.onmessage = (evt: MessageEvent) => {
       setChatText(
-        (chatText => [...chatText, {id:'bot',text: JSON.parse(evt.data)}])
+        (chatText => [...chatText, {id:'bot',text: evt.data}])
       )  
     };  
 
